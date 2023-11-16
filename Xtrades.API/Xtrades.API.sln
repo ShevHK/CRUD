@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xtrades.API", "Xtrades.API\Xtrades.API.csproj", "{0A7550A2-FAAB-4F38-86CB-C28C10920073}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xtrades.DAL", "Xtrades.DAL\Xtrades.DAL.csproj", "{7869E1AB-9423-4261-97E9-0D7D6EFB5C2A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xtrades.BLL", "Xtrades.BLL\Xtrades.BLL.csproj", "{82715558-0B12-463C-A3FA-8B8FB28B6717}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7869E1AB-9423-4261-97E9-0D7D6EFB5C2A} = {7869E1AB-9423-4261-97E9-0D7D6EFB5C2A}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A7550A2-FAAB-4F38-86CB-C28C10920073}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A7550A2-FAAB-4F38-86CB-C28C10920073}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A7550A2-FAAB-4F38-86CB-C28C10920073}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A7550A2-FAAB-4F38-86CB-C28C10920073}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7869E1AB-9423-4261-97E9-0D7D6EFB5C2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7869E1AB-9423-4261-97E9-0D7D6EFB5C2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7869E1AB-9423-4261-97E9-0D7D6EFB5C2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7869E1AB-9423-4261-97E9-0D7D6EFB5C2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82715558-0B12-463C-A3FA-8B8FB28B6717}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82715558-0B12-463C-A3FA-8B8FB28B6717}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82715558-0B12-463C-A3FA-8B8FB28B6717}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82715558-0B12-463C-A3FA-8B8FB28B6717}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {75A1486A-9BEF-40CD-8F1D-0DC90580F817}
+	EndGlobalSection
+EndGlobal
