@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<UserDbContext>(options => options.UseSqlServer(connection));
-builder.Services.AddTransient<IRepository<User>, UserRepository>();
+builder.Services.AddTransient<IRepository<User>, UserRepository<User>>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddAutoMapper(typeof(Program)); 
 

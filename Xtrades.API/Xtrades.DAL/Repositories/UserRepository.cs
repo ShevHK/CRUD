@@ -4,44 +4,46 @@ using Xtrades.DAL.Entities;
 
 namespace Xtrades.DAL.Repositories
 {
-    public class UserRepository : IRepository<User>
+    public class UserRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         private readonly UserDbContext _context;
+        private readonly DbSet<TEntity> _dbSet;
 
         public UserRepository(UserDbContext context)
         {
             _context = context;
+            _dbSet = context.Set<TEntity>();
         }
 
-        public async Task CreateAsync(User entity)
+        public async Task CreateAsync(TEntity entity)
         {
-            await _context.Users.AddAsync(entity);
+            await _dbSet.AddAsync(entity);
             await SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
-            var userToDelete = await _context.Users.FindAsync(id);
-            if (userToDelete != null)
+            var entityToDelete = await _dbSet.FindAsync(id);
+            if (entityToDelete != null)
             {
-                _context.Users.Remove(userToDelete);
+                _dbSet.Remove(entityToDelete);
                 await SaveChangesAsync();
             }
         }
 
-        public async Task<IEnumerable<User>> GetAllAsync()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _dbSet.ToListAsync();
         }
 
-        public async Task<IEnumerable<User>> GetAllAsync(Func<User, bool> func)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(Func<TEntity, bool> predicate)
         {
-            return  _context.Users.Where(func).ToList();
+            return _dbSet.Where(predicate).ToList();
         }
 
-        public async Task<User> ReadAsync(int id)
+        public async Task<TEntity> ReadAsync(int id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _dbSet.FindAsync(id);
         }
 
         public async Task SaveChangesAsync()
@@ -49,11 +51,12 @@ namespace Xtrades.DAL.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(User entity)
+        public async Task UpdateAsync(TEntity entity)
         {
-            _context.Users.Update(entity);
+            _context.Entry(entity).State = EntityState.Modified;
             await SaveChangesAsync();
         }
     }
+
 
 }
