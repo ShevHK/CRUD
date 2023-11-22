@@ -9,6 +9,7 @@ namespace Xtrades.API.Mapper
         public MappingProfile()
         {
             CreateMap<UserRequest, User>();
+            CreateMap<GroupRequest, Group>();
         }
     }
 

@@ -4,21 +4,22 @@ using Xtrades.DAL.Entities;
 
 namespace Xtrades.DAL.Repositories
 {
-    public class UserRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class GeneralRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        private readonly UserDbContext _context;
+        private readonly AppDbContext _context;
         private readonly DbSet<TEntity> _dbSet;
 
-        public UserRepository(UserDbContext context)
+        public GeneralRepository(AppDbContext context)
         {
             _context = context;
             _dbSet = context.Set<TEntity>();
         }
 
-        public async Task CreateAsync(TEntity entity)
+        public async Task<TEntity> CreateAsync(TEntity entity)
         {
             await _dbSet.AddAsync(entity);
-            await SaveChangesAsync();
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
         public async Task DeleteAsync(int id)
@@ -27,8 +28,24 @@ namespace Xtrades.DAL.Repositories
             if (entityToDelete != null)
             {
                 _dbSet.Remove(entityToDelete);
-                await SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
+        }
+        public async Task DeleteAsync(TEntity ientityd)
+        {
+                _dbSet.Remove(ientityd);
+            await _context.SaveChangesAsync();
+
+        }
+
+        public async Task DeleteAsync(Func<TEntity, bool> predicate)
+        {
+            var entitiesToDelete = _dbSet.Where(predicate);
+            if (entitiesToDelete != null && entitiesToDelete.Any())
+            {
+                _dbSet.RemoveRange(entitiesToDelete);
+            }
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
@@ -51,10 +68,11 @@ namespace Xtrades.DAL.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(TEntity entity)
+        public async Task<TEntity> UpdateAsync(TEntity entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
-            await SaveChangesAsync();
+            await _context.SaveChangesAsync();
+            return entity;
         }
     }
 

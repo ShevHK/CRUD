@@ -3,11 +3,11 @@ using Xtrades.DAL.Entities;
 
 namespace Xtrades.DAL.Context
 {
-    public class UserDbContext : DbContext
+    public class AppDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
 
-        public UserDbContext(DbContextOptions<UserDbContext> options)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
             //Database.EnsureDeleted();
@@ -22,6 +22,11 @@ namespace Xtrades.DAL.Context
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
+            modelBuilder.Entity<Group>()
+                .HasIndex(u => u.Name)
+                .IsUnique(); 
+            modelBuilder.Entity<UserGroup>()
+                .HasKey(ug => new { ug.UserId, ug.GroupId });
         }
     }
 }

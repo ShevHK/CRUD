@@ -15,9 +15,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<UserDbContext>(options => options.UseSqlServer(connection));
-builder.Services.AddTransient<IRepository<User>, UserRepository<User>>();
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
+builder.Services.AddTransient<IRepository<User>, GeneralRepository<User>>();
+builder.Services.AddTransient<IRepository<Group>, GeneralRepository<Group>>();
+builder.Services.AddTransient<IRepository<UserGroup>, GeneralRepository<UserGroup>>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IGroupService, GroupService>();
 builder.Services.AddAutoMapper(typeof(Program)); 
 
 

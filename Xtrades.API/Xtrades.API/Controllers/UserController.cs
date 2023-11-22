@@ -67,14 +67,12 @@ namespace Xtrades.API.Controllers
         {
             try
             {
-                // Перевірка формату телефону
                 if (!Regex.IsMatch(newUser.Phone, @"^380\d{9}$"))
                 {
                     var errorResponse = new ApiResponse<User>(false, errorMessage: "Invalid phone format. Should be 380XXXXXXXXX");
                     return BadRequest(errorResponse);
                 }
 
-                // Перевірка формату електронної пошти
                 if (!Regex.IsMatch(newUser.Email, @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$"))
                 {
                     var errorResponse = new ApiResponse<User>(false, errorMessage: "Invalid email format.");
@@ -82,9 +80,9 @@ namespace Xtrades.API.Controllers
                 }
                 var user = _mapper.Map<User>(newUser);
 
-                await _userService.CreateUserAsync(user);
+                user = await _userService.CreateUserAsync(user);
                 var createdResponse = new ApiResponse<User>(true, user);
-                return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, createdResponse);
+                return Ok(createdResponse);
             }
             catch (Exception ex)
             {
@@ -98,14 +96,12 @@ namespace Xtrades.API.Controllers
         {
             try
             {
-                // Перевірка формату телефону
                 if (!Regex.IsMatch(updatedUser.Phone, @"^380\d{9}$"))
                 {
                     var errorResponse = new ApiResponse<object>(false, errorMessage: "Invalid phone format. Should be 380XXXXXXXXX");
                     return BadRequest(errorResponse);
                 }
 
-                // Перевірка формату електронної пошти
                 if (!Regex.IsMatch(updatedUser.Email, @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$"))
                 {
                     var errorResponse = new ApiResponse<object>(false, errorMessage: "Invalid email format.");

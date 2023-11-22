@@ -22,22 +22,26 @@ namespace Xtrades.BLL.Services
         {
             return await _userRepository.GetAllAsync();
         }
+        public async Task<IEnumerable<User>> GetAllUsersAsync(Func<User, bool> predicate)
+        {
+            return await _userRepository.GetAllAsync(predicate);
+        }
 
         public async Task<User> GetUserByIdAsync(int id)
         {
             return await _userRepository.ReadAsync(id);
         }
 
-        public async Task CreateUserAsync(User newUser)
+        public async Task<User> CreateUserAsync(User newUser)
         {
             if (await IsPhoneOrEmailUnique(newUser.Phone, newUser.Email))
             {
                 throw new InvalidOperationException("User with the same phone or email already exists");
             }
-            await _userRepository.CreateAsync(newUser);
+            return await _userRepository.CreateAsync(newUser);
         }
 
-        public async Task UpdateUserAsync(int id, User updatedUser)
+        public async Task<User> UpdateUserAsync(int id, User updatedUser)
         {
             if (await IsPhoneOrEmailUnique(updatedUser.Phone, updatedUser.Email, id))
             {
@@ -53,12 +57,11 @@ namespace Xtrades.BLL.Services
             existingUser.Phone = updatedUser.Phone;
             existingUser.Email = updatedUser.Email;
 
-            await _userRepository.UpdateAsync(existingUser);
+            return await _userRepository.UpdateAsync(existingUser);
         }
 
         public async Task DeleteUserAsync(int id)
         {
-            // Перевірка існування користувача перед видаленням
             var existingUser = await _userRepository.ReadAsync(id);
             if (existingUser == null)
             {
